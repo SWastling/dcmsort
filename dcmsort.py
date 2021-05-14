@@ -308,7 +308,7 @@ def main():
     out_dir = args.o.resolve()
 
     for item in args.i:
-        print('* scanning for DICOM files in %s' % item)
+        print('* scanning for DICOM files in %s' % utils.shorten_path(item))
         to_sort = scan_for_dicom(item)
 
         if len(to_sort) > 0:
