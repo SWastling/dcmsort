@@ -84,5 +84,5 @@ the data stored in `test_data` directory
     ```
 ## Authors and Acknowledgements
 Dr Stephen Wastling 
-([stephen.wastling@nhs.net](mailto:stephen.wastling@nhs.net))  based on Python 
-2 code in other applications by Dr Mark White.
+([stephen.wastling@nhs.net](mailto:stephen.wastling@nhs.net))  based on 
+functions from other applications by Dr Mark White.
