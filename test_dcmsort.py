@@ -14,58 +14,6 @@ def test_progress(capsys, args, expected_output):
     assert captured.out == expected_output
 
 
-def test_git_version(tmp_path):
-
-    assert git_version(tmp_path) == ('unknown', False)
-
-    # Set up a mock git repo
-    sp.run(['git', 'init'], check=True, text=True, cwd=tmp_path)
-
-    assert git_version(tmp_path) == ('unknown', False)
-
-    # Add a file to the git repo
-    test_fp = tmp_path / 'test.txt'
-    test_fp.touch()
-
-    assert git_version(tmp_path) == ('unknown', False)
-
-    # Add the file to the repo
-    sp.run(['git', 'add', test_fp], check=True, text=True, cwd=tmp_path)
-
-    assert git_version(tmp_path) == ('unknown', False)
-
-    # Commit changes
-    sp.run(['git', 'commit', '-a', '-m', '"Mock commit"'],
-           check=True, text=True, cwd=tmp_path)
-
-    assert git_version(tmp_path) == ('unknown', False)
-
-    # Tag as release
-    sp.run(['git', 'tag', '-a', 'release-1.0.0', '-m', '"Release 1.0.0"'],
-           check=True, text=True, cwd=tmp_path)
-
-    assert git_version(tmp_path) == ('release-1.0.0', True)
-
-    # Make the repo dirty
-    test_fp.write_text('Hello')
-
-    sp_out = sp.run(['git', 'describe', '--tags', '--long',
-                     '--dirty=+'], check=True, capture_output=True,
-                    text=True, cwd=tmp_path)
-
-    assert git_version(tmp_path) == (sp_out.stdout.strip(), False)
-
-    # Commit on top of tag as release
-    sp.run(['git', 'commit', '-a', '-m', '"Mock commit 2"'],
-           check=True, text=True, cwd=tmp_path)
-
-    sp_out = sp.run(['git', 'describe', '--tags', '--long',
-                     '--dirty=+'], check=True, capture_output=True,
-                    text=True, cwd=tmp_path)
-
-    assert git_version(tmp_path) == (sp_out.stdout.strip(), False)
-
-
 @pytest.mark.parametrize("test_name, expected_output",
                          [('a', 'a'), ('a_b', 'a_b'),
                           (' __a^ b^__ ', 'a_b'), (',.;:=%_&()_+-a', '__-a')])
