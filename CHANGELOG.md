@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.0](https://github.com/SWastling/dcmsort/tree/release-1.1.0) - 2022-01-06
+## [1.1.1](https://github.com/SWastling/dcmsort/tree/1.1.1) - 2022-01-06
+
+### Changed
+
+- Corrected error in setup.cfg
+
+## [1.1.0](https://github.com/SWastling/dcmsort/tree/1.1.0) - 2022-01-06
 ### Added
 
 - Linting, and formatting
