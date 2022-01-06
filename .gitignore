@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
+# Pycharm project
 .idea/
 
 # Distribution / packaging
@@ -86,6 +87,7 @@ celerybeat-schedule
 env/
 venv/
 ENV/
+dcmsort-env/
 
 # Spyder project settings
 .spyderproject
