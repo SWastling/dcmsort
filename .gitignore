@@ -87,7 +87,7 @@ celerybeat-schedule
 env/
 venv/
 ENV/
-dcmsort-env/
+dcmsort-tox-env/
 
 # Spyder project settings
 .spyderproject
