@@ -1,26 +1,26 @@
 # Contributing
 
-This is a personal project, I'm not expecting contributions. This guide is intended to be a reference for myself.
+This is a personal project, hence contributions aren't expected. 
+This guide is intended to be a reference for myself.
 
 ## Developing
 
-1. Activate the virtual environment in which tox is installed
+1. Activate the virtual environment in which `tox` is installed
 
     ```bash
-    source dcmsort-env/bin/activate
+    source dcmsort-tox-env/bin/activate
     ```
    
-2. Before making any modification call tox to run the linters 
-(isort, black and flake8) then the tests, and coverage:
+2. Call `tox` to check the formatting and style (`isort`, `black` and `flake8`)
+ run the tests, and check testing coverage:
 
     ```bash
     tox
     ```
 
-3. Make your changes
+3. Make your changes and modify the appropriate tests 
 
-4. After making any modifications auto-format the code with with the tox format 
-option which in this case calls isort and black:
+4. Auto-format the code with `isort` and `black` using `tox`:
 
     ```bash
     tox -e format
@@ -43,32 +43,28 @@ option which in this case calls isort and black:
 is installed
 
     ```bash
-    source dcmsort-env/bin/activate
+    source dcmsort-tox-env/bin/activate
     ```
 
-7. Re-run tox to run the linters 
-(isort, black and flake8) then the tests, and coverage:
+7. Repeat step 2 i.e. call `tox` to check the formatting and style run the 
+tests, and check testing coverage:
 
     ```bash
     tox
     ```
 
-
-
 ## Releasing
 
-This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and [PEP 440](https://www.python.org/dev/peps/pep-0440/), and uses [setuptools_scm](https://pypi.org/project/setuptools-scm/) to determine the version from the latest `git` tag.
-
-1. Commit your changes
+1. Commit your changes:
 
     ```bash
     git commit -a
     ```
 
-2. Choose a version number:
+2. Choose a version number e.g.:
 
     ```bash
-    version=0.2.0
+    version=release-1.1.0
     ```
 
 3. Update the [changelog](./CHANGELOG.md):
@@ -83,14 +79,49 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
     git tag -a $version -m "release $version"
     ```
 
-5. Push the changes to the github repository
+5. Push the changes to the GitHub repository
 
     ```bash
     git push -u origin main --follow-tags
     ```
 
-6. Create the [source distribution](https://packaging.python.org/glossary/#term-Source-Distribution-or-sdist) and [wheel](https://packaging.python.org/glossary/#term-Built-Distribution) packages, then publish the release to [PyPI](https://pypi.org/project/dcmsort/):
+6. Create the [source distribution](https://packaging.python.org/glossary/#term-Source-Distribution-or-sdist) and [wheel](https://packaging.python.org/glossary/#term-Built-Distribution) packages:
 
     ```bash
     tox -e release
+    ```
+   
+   This creates a `.whl` and `.tar.gz` file in `dist` directory - these can be 
+   uploaded to GitHub in the Release section and installed locally (see below).
+   
+## Local Install
+
+1. Create a directory to store the package e.g. 
+
+    ```bash
+    mkdir dcmsort
+    ```
+
+2. Create a new virtual environment in which to install `dcmsort`
+
+    ```bash
+    python3 -m venv dcmsort-env
+    ```
+   
+3. Activate the virtual environment:
+
+    ```bash
+    source dcmsort-env/bin/activate
+    ```
+
+4. Upgrade `pip` and `build`:
+
+    ```bash
+    pip install --upgrade pip
+    pip install --upgrade build
+    ```
+
+5. Install using `pip`:
+    ```bash
+    pip install <PATH-TO-WHL> 
     ```

@@ -247,7 +247,6 @@ def sort_dicom(output_dir, dcm_filelist):
 
         # Ignore DICOMDIR files i.e. Media Storage Directory Storage
         sop_class = ds.file_meta.get("MediaStorageSOPClassUID", None)
-        print(sop_class, sop_class.name)
         if sop_class == "1.2.840.10008.1.3.10":
             continue
 
