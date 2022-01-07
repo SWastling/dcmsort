@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [release-1.1.4](https://github.com/SWastling/dcmsort/tree/release-1.1.4) - 2022-01-07
+
+### Added 
+
+Missing __init__.py
+
 ## [release-1.1.3](https://github.com/SWastling/dcmsort/tree/release-1.1.3) - 2022-01-07
 
 ### Changed
