@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [release-1.1.2](https://github.com/SWastling/dcmsort/tree/release-1.1.2) - 2022-01-07
+
+### Changed
+
+- Updated documentation
+- Removed redundant file conftest.py
+- Removed print statement from dcmsort.py 
+- Removed twine references from tox.ini
+
+
 ## [1.1.1](https://github.com/SWastling/dcmsort/tree/1.1.1) - 2022-01-06
 
 ### Changed
