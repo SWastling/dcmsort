@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [release-1.1.3](https://github.com/SWastling/dcmsort/tree/release-1.1.3) - 2022-01-07
+
+### Changed
+
+Modification to gitignore as changed name of virtual environment for running tox
+
 ## [release-1.1.2](https://github.com/SWastling/dcmsort/tree/release-1.1.2) - 2022-01-07
 
 ### Changed
