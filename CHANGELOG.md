@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [release-1.1.5](https://github.com/SWastling/dcmsort/tree/release-1.1.5) - 2022-01-21
+
+### Changed 
+
+Minor modifications to:
+- tox.ini: include python 3.8 and 3.9 environments
+- setup.cfg: generalise package finding
+- README.md: Expand installation instructions
+
 ## [release-1.1.4](https://github.com/SWastling/dcmsort/tree/release-1.1.4) - 2022-01-07
 
 ### Added 
