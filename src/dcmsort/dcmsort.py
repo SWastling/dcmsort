@@ -33,7 +33,7 @@ def main():
 
     parser.add_argument(
         "i",
-        help="list of input directories to search for " "DICOM files",
+        help="list of input directories to search for DICOM files",
         nargs="+",
         type=pathlib.Path,
     )
