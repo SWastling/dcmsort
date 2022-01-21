@@ -25,16 +25,42 @@ number, modality and series description of the form:
 `SeriesNumber-Modality-SeriesDescription`
 
 ## Installing
-This package requires Python 3.7 or newer. To install the latest version from 
-GitHub 
+1. Create a directory to store the package e.g.:
 
-_Note: I strongly recommend creating a venv first, and then installing into it_
+    ```bash
+    mkdir dcmsort
+    ```
 
-```bash
-pip install git+https://github.com/SWastling/dcmsort.git
-```
+2. Create a new virtual environment in which to install `dcmsort`:
+
+    ```bash
+    python3 -m venv dcmsort-env
+    ```
+   
+3. Activate the virtual environment:
+
+    ```bash
+    source dcmsort-env/bin/activate
+    ```
+
+4. Upgrade `pip` and `build`:
+
+    ```bash
+    pip install --upgrade pip
+    pip install --upgrade build
+    ```
+
+5. Install using `pip`:
+    ```bash
+    pip install git+https://github.com/SWastling/dcmsort.git
+    ```
+
+## License
+See [MIT license](./LICENSE)
+
 
 ## Authors and Acknowledgements
 Dr Stephen Wastling 
 ([stephen.wastling@nhs.net](mailto:stephen.wastling@nhs.net))  based on 
-some functions from other applications by Dr Mark White.
+some functions from other applications by by Mark White 
+([mark@celos.net](mailto:mark@celos.net)).
