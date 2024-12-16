@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [release-1.1.6](https://github.com/SWastling/dcmsort/releases/tag/release-1.1.6) - 2024-12-16
+
+### Changed 
+
+- Switched from tox to uv and ruff 
+- Updated to Python 3.13
+
 ## [release-1.1.5](https://github.com/SWastling/dcmsort/tree/release-1.1.5) - 2022-01-21
 
 ### Changed 
