@@ -1,13 +1,14 @@
 import pathlib
 
 import pytest
+import importlib.metadata
 
 import dcmsort.dcmsort as dcmsort
 
 THIS_DIR = pathlib.Path(__file__).resolve().parent
 TEST_DATA_DIR = THIS_DIR / "test_data"
 
-import importlib.metadata
+
 __version__ = importlib.metadata.version("dcmsort")
 
 
@@ -172,7 +173,6 @@ def test_sort_dicom(tmp_path):
 
 
 def test_shorten_path():
-
     assert dcmsort.shorten_path(pathlib.Path("a/b/c")) == "a/b/c"
     assert (
         len(
@@ -221,12 +221,14 @@ def test_prints_version(script_runner):
 
 def test_sorts_files(script_runner, tmp_path):
     result = script_runner.run(
-        [SCRIPT_NAME,
-        "-o",
-        str(tmp_path),
-        str(TEST_DATA_DIR / "dir1"),
-        str(TEST_DATA_DIR / "dir2"),
-        str(TEST_DATA_DIR / "dir2/dir3")]
+        [
+            SCRIPT_NAME,
+            "-o",
+            str(tmp_path),
+            str(TEST_DATA_DIR / "dir1"),
+            str(TEST_DATA_DIR / "dir2"),
+            str(TEST_DATA_DIR / "dir2/dir3"),
+        ]
     )
     assert result.success
 

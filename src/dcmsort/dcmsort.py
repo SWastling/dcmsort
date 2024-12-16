@@ -231,7 +231,6 @@ def sort_dicom(output_dir, dcm_filelist):
     :type dcm_filelist: list
     """
     for dcm_counter, dcm_file in enumerate(dcm_filelist, 1):
-
         # Update progress bar
         progress(
             dcm_counter,
