@@ -7,7 +7,7 @@ import re
 import shutil
 import sys
 
-import importlib_metadata as metadata
+import importlib.metadata
 import pydicom
 
 # useful patterns for simplifying names
@@ -18,10 +18,7 @@ undere = re.compile(r"_+$")
 remove = re.compile(r"[^A-Za-z0-9_-]")
 removep = re.compile(r"[^A-Za-z0-9,.;:=%^&()_+-]")
 
-try:
-    __version__ = metadata.version("dcmsort")
-except metadata.PackageNotFoundError:  # pragma: no cover
-    __version__ = "unknown"
+__version__ = importlib.metadata.version("dcmsort")
 
 
 def main():
