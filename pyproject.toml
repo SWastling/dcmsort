@@ -1,7 +1,7 @@
 [project]
 name = "dcmsort"
 version = "1.1.6"
-description = "Sort DICOM files into patient > study > series hierarchy"
+description = "Sort DICOM files into patient / study / series hierarchy"
 readme = "README.md"
 authors = [
     { name = "Stephen Wastling", email = "stephen.wastling@nhs.net" }
@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-myapp = "dcmsort.dcmsort:main"
+dcmsort = "dcmsort.dcmsort:main"
 
 [build-system]
 requires = ["setuptools>=61"]
