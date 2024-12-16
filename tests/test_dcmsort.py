@@ -7,6 +7,9 @@ import dcmsort.dcmsort as dcmsort
 THIS_DIR = pathlib.Path(__file__).resolve().parent
 TEST_DATA_DIR = THIS_DIR / "test_data"
 
+import importlib.metadata
+__version__ = importlib.metadata.version("dcmsort")
+
 
 @pytest.mark.parametrize(
     "args, expected_output",
@@ -192,31 +195,38 @@ SCRIPT_USAGE = f"usage: {SCRIPT_NAME} [-h] [-o output_folder] [--version] i [i .
 
 
 def test_prints_help_1(script_runner):
-    result = script_runner.run(SCRIPT_NAME)
+    result = script_runner.run([SCRIPT_NAME])
     assert result.success
     assert result.stdout.startswith(SCRIPT_USAGE)
 
 
 def test_prints_help_2(script_runner):
-    result = script_runner.run(SCRIPT_NAME, "-h")
+    result = script_runner.run([SCRIPT_NAME, "-h"])
     assert result.success
     assert result.stdout.startswith(SCRIPT_USAGE)
 
 
 def test_prints_help_for_invalid_option(script_runner):
-    result = script_runner.run(SCRIPT_NAME, "-!")
+    result = script_runner.run([SCRIPT_NAME, "-!"])
     assert not result.success
     assert result.stderr.startswith(SCRIPT_USAGE)
 
 
+def test_prints_version(script_runner):
+    result = script_runner.run([SCRIPT_NAME, "--version"])
+    assert result.success
+    expected_version_output = SCRIPT_NAME + " " + __version__ + "\n"
+    assert result.stdout == expected_version_output
+
+
 def test_sorts_files(script_runner, tmp_path):
     result = script_runner.run(
-        SCRIPT_NAME,
+        [SCRIPT_NAME,
         "-o",
         str(tmp_path),
         str(TEST_DATA_DIR / "dir1"),
         str(TEST_DATA_DIR / "dir2"),
-        str(TEST_DATA_DIR / "dir2/dir3"),
+        str(TEST_DATA_DIR / "dir2/dir3")]
     )
     assert result.success
 
