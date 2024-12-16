@@ -25,42 +25,31 @@ number, modality and series description of the form:
 `SeriesNumber-Modality-SeriesDescription`
 
 ## Installing
-1. Create a directory to store the package e.g.:
+1. Create a new virtual environment in which to install `dcmsort`:
 
     ```bash
-    mkdir dcmsort
-    ```
-
-2. Create a new virtual environment in which to install `dcmsort`:
-
-    ```bash
-    python3 -m venv dcmsort-env
+    uv venv dcmsort-venv
     ```
    
-3. Activate the virtual environment:
+2. Activate the virtual environment:
 
     ```bash
-    source dcmsort-env/bin/activate
+    source dcmsort-venv/bin/activate
     ```
 
-4. Upgrade `pip` and `build`:
-
+4. Install using `uv pip`:
     ```bash
-    pip install --upgrade pip
-    pip install --upgrade build
+    uv pip install git+https://github.com/SWastling/dcmsort.git
     ```
-
-5. Install using `pip`:
-    ```bash
-    pip install git+https://github.com/SWastling/dcmsort.git
-    ```
+   
+> [!TIP]
+> You can also run `dcmsort` without installing it using 
+>[uvx](https://docs.astral.sh/uv/guides/tools/) i.e. with the command 
+>`uvx --from  git+https://github.com/SWastling/dcmsort.git dcmsort`
 
 ## License
 See [MIT license](./LICENSE)
 
-
 ## Authors and Acknowledgements
-Dr Stephen Wastling 
-([stephen.wastling@nhs.net](mailto:stephen.wastling@nhs.net))  based on 
-some functions from other applications by by Mark White 
-([mark@celos.net](mailto:mark@celos.net)).
+Written by [Stephen Wastling](mailto:stephen.wastling@nhs.net) based on 
+some functions from other applications by by Mark White.
