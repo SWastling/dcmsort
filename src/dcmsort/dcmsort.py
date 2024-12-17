@@ -146,9 +146,9 @@ def scan_for_dicom(dp, to_sort=[]):
 def main():
     parser = argparse.ArgumentParser(
         description="Sort DICOM files into directories using the Study Root "
-                    "Information Model i.e. 'FamilyName_GivenName-PatientID/"
-                    "StudyDate.StudyTime-StudyID-StudyDescription/"
-                    "SeriesNumber-Modality-SeriesDescription/SOPInstanceUID.dcm'"
+        "Information Model i.e. 'FamilyName_GivenName-PatientID/"
+        "StudyDate.StudyTime-StudyID-StudyDescription/"
+        "SeriesNumber-Modality-SeriesDescription/SOPInstanceUID.dcm'"
     )
 
     parser.add_argument(
