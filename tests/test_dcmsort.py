@@ -242,3 +242,14 @@ def test_sorts_files(script_runner, tmp_path):
     assert image_1.is_file()
     assert image_2.is_file()
     assert image_3.is_file()
+
+
+def test_sorts_files_no_DICOM(script_runner, tmp_path):
+    result = script_runner.run(
+        [
+            SCRIPT_NAME,
+            "-o",
+            str(tmp_path),
+            str(tmp_path)]
+    )
+    assert result.success

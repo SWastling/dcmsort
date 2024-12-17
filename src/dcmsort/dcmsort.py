@@ -56,12 +56,13 @@ def main():
 
     out_dir = args.o.resolve()
 
+    to_sort = []
     for item in args.i:
         print("* scanning for DICOM files in %s" % shorten_path(item))
-        to_sort = scan_for_dicom(item)
+        to_sort = scan_for_dicom(item, to_sort)
 
-        if len(to_sort) > 0:
-            sort_dicom(out_dir, to_sort)
+    if len(to_sort) > 0:
+        sort_dicom(out_dir, to_sort)
 
 
 def progress(count, total, message=None):
@@ -294,16 +295,17 @@ def sort_dicom(output_dir, dcm_filelist):
         shutil.copy(dcm_file, new_fp)
 
 
-def scan_for_dicom(a):
+def scan_for_dicom(a, to_sort=[]):
     """
     Scan a directory recursively for DICOM files.
 
     :param a: Directory to scan
     :type a: pathlib.Path
+    :param to_sort: List of DICOM file to append to
+    :type to_sort: list
     :return: List of DICOM files
     :rtype: list
     """
-    to_sort = []
     for root, _, files in os.walk(a):
         for file_counter, fn in enumerate(files, 1):
             fp = pathlib.Path(root) / fn
