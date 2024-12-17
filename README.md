@@ -17,12 +17,16 @@ dcmsort [-h] [-o] [--version] i
 
 ## Description
 This package attempts to find and then sort DICOM files into directories using 
-the Study Root Information Model i.e. it will create a study directories based 
-on study date, study time and patient name of the form: 
-`StudyDate.StudyTime-PatientName`
-Within each study directory it will create series directories based on series 
-number, modality and series description of the form: 
-`SeriesNumber-Modality-SeriesDescription`
+the Study Root Information Model i.e. it makes: 
+ - Patient level directories based on the patient's family and given names and 
+ their Patient ID of the form: `FamilyName_GivenName-PatientID`
+ - Study level directories based on the study date, study time, study ID and 
+ study description and patient name of the form: 
+ `StudyDate.StudyTime-StudyID-StudyDescription`
+ - Series level directories based on the series number, modality and series 
+ description of the form: `SeriesNumber-Modality-SeriesDescription`
+
+The `SOPInstanceUID` with the suffix `.dcm` is used as the filename.
 
 ## Installing
 1. Create a new virtual environment in which to install `dcmsort`:
@@ -51,5 +55,5 @@ number, modality and series description of the form:
 See [MIT license](./LICENSE)
 
 ## Authors and Acknowledgements
-Written by [Stephen Wastling](mailto:stephen.wastling@nhs.net) based on 
-some functions from other applications by by Mark White.
+Written by [Stephen Wastling](mailto:stephen.wastling@nhs.net) using some 
+functions from other applications by by Mark White.

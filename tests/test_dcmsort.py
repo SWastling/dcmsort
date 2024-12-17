@@ -13,6 +13,22 @@ __version__ = importlib.metadata.version("dcmsort")
 
 
 @pytest.mark.parametrize(
+    "test_fp, expected_output",
+    [
+        (pathlib.Path("a/b/c"), "a/b/c"),
+        (
+            pathlib.Path("/aaa/bbb/ccc/ddd/eee/fff/ggg/hhh/iii/jjj/kkk/lll"),
+            "/aaa/bbb/ccc/ddd/.../hhh/iii/jjj/kkk/lll",
+        ),
+    ],
+)
+def test_shorten_path(test_fp, expected_output):
+    out_str = dcmsort.shorten_path(test_fp)
+    assert out_str == expected_output
+    assert len(out_str) <= 40
+
+
+@pytest.mark.parametrize(
     "args, expected_output",
     [
         ([0, 10, "doing thing"], "doing thing [  0%]\r"),
@@ -27,14 +43,6 @@ def test_progress(capsys, args, expected_output):
 
 
 @pytest.mark.parametrize(
-    "test_name, expected_output",
-    [("a", "a"), ("a_b", "a_b"), (" __a^ b^__ ", "a_b"), (",.;:=%_&()_+-a", "__-a")],
-)
-def test_simplify_under(test_name, expected_output):
-    assert dcmsort.simplify_under(test_name)
-
-
-@pytest.mark.parametrize(
     "test_description, expected_output",
     [
         ("a", "a"),
@@ -43,99 +51,8 @@ def test_simplify_under(test_name, expected_output):
         (",.;:=%^&()_+-a", "__-a"),
     ],
 )
-def test_simplify_series(test_description, expected_output):
-    assert dcmsort.simplify_series(test_description) == expected_output
-
-
-@pytest.mark.parametrize(
-    "test_series_num, test_modality, test_clean_desc," "expected_output",
-    [
-        (1, "MR", "abc", "00001-MR-abc"),
-        (5, "CT", "efg", "00005-CT-efg"),
-        (2345, "US", "xyz", "02345-US-xyz"),
-    ],
-)
-def test_default_series_dir(
-    test_series_num, test_modality, test_clean_desc, expected_output
-):
-    assert (
-        dcmsort.default_series_dir(test_series_num, test_modality, test_clean_desc)
-        == expected_output
-    )
-
-
-def test_default_study_dir():
-    assert (
-        dcmsort.default_study_dir("20200101.120000", "bloggs_joe")
-        == "20200101.120000-bloggs_joe"
-    )
-
-
-@pytest.mark.parametrize(
-    "test_echo, test_instance_num, test_dup_num, " "expected_output",
-    [
-        (1, 1, 0, "00001.dcm"),
-        (5, 2, 0, "00002-echo00005.dcm"),
-        (1, 2345, 1, "02345-dup00001.dcm"),
-        (5, 2345, 1, "02345-echo00005-dup00001.dcm"),
-    ],
-)
-def test_make_filename(test_echo, test_instance_num, test_dup_num, expected_output):
-    assert (
-        dcmsort.make_filename(test_echo, test_instance_num, test_dup_num)
-        == expected_output
-    )
-
-
-"""
-Need to test 4 different tags:
-1. Siemens CoilString (0x0051100f)
-    a. Test images I0, I1, I2, I3 and I4
-2. InstanceCreationTime (0x00080013)
-    a. Test images I0, I1, I7, I8 and I9
-3. ContentTime (0x00080033)
-    a. Test images I0, I1, I12, I13 and I14
-4. ImageType (0x00080008)
-    a. Test images I0, I1, I17, I18 and I19
-
-There are 5 scenarios (i.e. 5 test DICOM files) for each:
-1. The tag is present in both files and the values are equal, then are_different
-returns None (e.g. I0 and I1)
-2. The tag is present in both files and the values are different, then
-are_different returns True (e.g. I0 and I2)
-3. The tag is missing from both files, then are_different returns None
-(e.g. I3 and I4)
-4. The tag is missing from the first file, then are_different returns True
-(e.g. I3 and I1)
-5. The tag is missing from the second file, then are_different returns True
-(e.g. I0 and I4)
-"""
-
-
-@pytest.mark.parametrize(
-    "test_fn1, test_fn2, expected_output",
-    [
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I1", None),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I2", True),
-        (TEST_DATA_DIR / "I3", TEST_DATA_DIR / "I4", None),
-        (TEST_DATA_DIR / "I3", TEST_DATA_DIR / "I1", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I4", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I7", True),
-        (TEST_DATA_DIR / "I8", TEST_DATA_DIR / "I9", None),
-        (TEST_DATA_DIR / "I8", TEST_DATA_DIR / "I1", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I9", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I12", True),
-        (TEST_DATA_DIR / "I13", TEST_DATA_DIR / "I14", None),
-        (TEST_DATA_DIR / "I13", TEST_DATA_DIR / "I1", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I14", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I17", True),
-        (TEST_DATA_DIR / "I18", TEST_DATA_DIR / "I19", None),
-        (TEST_DATA_DIR / "I18", TEST_DATA_DIR / "I1", True),
-        (TEST_DATA_DIR / "I0", TEST_DATA_DIR / "I19", True),
-    ],
-)
-def test_are_different(test_fn1, test_fn2, expected_output):
-    assert dcmsort.are_different(test_fn1, test_fn2) == expected_output
+def test_simplify_description(test_description, expected_output):
+    assert dcmsort.simplify_description(test_description) == expected_output
 
 
 def test_scan_for_dicom():
@@ -160,34 +77,19 @@ def test_sort_dicom(tmp_path):
         ],
     )
 
-    study_directory = tmp_path / "20201110.150633-unidentified_person"
-    series_directory = study_directory / "02000-MR-SeriesA"
-    image_1 = series_directory / "00001.dcm"
-    image_2 = series_directory / "00001-dup00001.dcm"
-    image_3 = series_directory / "00001-dup00002.dcm"
-    assert study_directory.is_dir()
-    assert series_directory.is_dir()
+    patient_dp = tmp_path / "UNIDENTIFIED_Person-DB2566436380"
+    assert patient_dp.is_dir()
+
+    study_dp = patient_dp / "20201110.150633-DB9374925401-Synthetic"
+    assert study_dp.is_dir()
+
+    series_dp = study_dp / "02000-MR-SeriesA"
+    assert series_dp.is_dir()
+
+    image_1 = (
+        series_dp / "1.2.826.0.1.1844281.0.721476.7787.20201110150633750.895456.dcm"
+    )
     assert image_1.is_file()
-    assert image_2.is_file()
-    assert image_3.is_file()
-
-
-def test_shorten_path():
-    assert dcmsort.shorten_path(pathlib.Path("a/b/c")) == "a/b/c"
-    assert (
-        len(
-            dcmsort.shorten_path(
-                pathlib.Path("/aaa/bbb/ccc/ddd/eee/fff/ggg/hhh/iii/jjj/kkk/lll")
-            )
-        )
-        <= 40
-    )
-    assert (
-        dcmsort.shorten_path(
-            pathlib.Path("/aaa/bbb/ccc/ddd/eee/fff/ggg/hhh/iii/jjj/kkk/lll")
-        )
-        == "/aaa/bbb/ccc/ddd/.../hhh/iii/jjj/kkk/lll"
-    )
 
 
 SCRIPT_NAME = "dcmsort"
@@ -232,24 +134,21 @@ def test_sorts_files(script_runner, tmp_path):
     )
     assert result.success
 
-    study_directory = tmp_path / "20201110.150633-unidentified_person"
-    series_directory = study_directory / "02000-MR-SeriesA"
-    image_1 = series_directory / "00001.dcm"
-    image_2 = series_directory / "00001-dup00001.dcm"
-    image_3 = series_directory / "00001-dup00002.dcm"
-    assert study_directory.is_dir()
-    assert series_directory.is_dir()
+    patient_dp = tmp_path / "UNIDENTIFIED_Person-DB2566436380"
+    assert patient_dp.is_dir()
+
+    study_dp = patient_dp / "20201110.150633-DB9374925401-Synthetic"
+    assert study_dp.is_dir()
+
+    series_dp = study_dp / "02000-MR-SeriesA"
+    assert series_dp.is_dir()
+
+    image_1 = (
+        series_dp / "1.2.826.0.1.1844281.0.721476.7787.20201110150633750.895456.dcm"
+    )
     assert image_1.is_file()
-    assert image_2.is_file()
-    assert image_3.is_file()
 
 
 def test_sorts_files_no_DICOM(script_runner, tmp_path):
-    result = script_runner.run(
-        [
-            SCRIPT_NAME,
-            "-o",
-            str(tmp_path),
-            str(tmp_path)]
-    )
+    result = script_runner.run([SCRIPT_NAME, "-o", str(tmp_path), str(tmp_path)])
     assert result.success
