@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [release-2.0.0](https://github.com/SWastling/dcmsort/releases/tag/release-2.0.0) - 2024-12-17
+
+### Changed 
+
+- Naming structure of output directories and filenames
+- README.md: updated to explain changes to output directory structure
+
 ## [release-1.1.6](https://github.com/SWastling/dcmsort/releases/tag/release-1.1.6) - 2024-12-16
 
 ### Changed 
